@@ -1,0 +1,9 @@
+type Points {
+  id: ID!
+  date: Date!
+  exercise: Int!
+  diet: Int!
+  alcohol: Int!
+  note: String!
+  user: User!
+}
