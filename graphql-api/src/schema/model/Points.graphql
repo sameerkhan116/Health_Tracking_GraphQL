@@ -4,6 +4,6 @@ type Points {
   exercise: Int!
   diet: Int!
   alcohol: Int!
-  note: String!
+  notes: String!
   user: User!
 }

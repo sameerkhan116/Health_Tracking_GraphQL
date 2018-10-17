@@ -1,21 +1,26 @@
-import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {User} from "./entity/User";
+import { bootstrap } from 'vesper';
+import { GraphQLDate, GraphQLTime, GraphQLDateTime } from 'graphql-iso-date';
 
-createConnection().then(async connection => {
+import { PointsController } from './controller/PointsController';
+import { Points } from './entity/Points';
+import { User } from './entity/User';
 
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
-    
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(User);
-    console.log("Loaded users: ", users);
-     
-    console.log("Here you can setup and run express/koa/any other framework.");
-    
-}).catch(error => console.log(error));
+const port = 4000;
+bootstrap({
+  port,
+  controllers: [PointsController],
+  entities: [Points, User],
+  schemas: [__dirname + '/schema/**/*.graphql'],
+  customResolvers: {
+    Date: GraphQLDate,
+    Time: GraphQLTime,
+    DateTime: GraphQLDateTime,
+  },
+  cors: true,
+})
+  .then(() => {
+    console.log(`Your app is running on http://localhost:${port}`);
+  })
+  .catch(err => {
+    console.log(err);
+  });
