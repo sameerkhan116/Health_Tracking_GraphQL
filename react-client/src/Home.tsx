@@ -1,8 +1,8 @@
-// @ts-ignore
 import { withAuth } from '@okta/okta-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
+
 import AppNavbar from './AppNavbar';
 
 interface IUser {
